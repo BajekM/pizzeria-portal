@@ -2,4 +2,12 @@
 
 .component {
   padding: $base-size;
+
+  a {
+    text-decoration: none;
+  }
+
+  th, td {
+    text-align: center;
+  }
 }
