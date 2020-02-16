@@ -29,43 +29,42 @@ class Waiter extends React.Component {
     fetchTables();
   }
 
-  setTableStatus(tableStatus, tableId, tableOrder) {
+  setTableStatus(tableStatus, tableId) {
     const {changeTableStatus} = this.props;
     changeTableStatus({
       id: tableId,
       status: tableStatus,
-      order: tableOrder,
     });
   }
 
-  renderActions(status, id, order){
+  renderActions(status, id){
     switch (status) {
       case 'free':
         return (
           <>
-            <Button onClick={() => this.setTableStatus('thinking', id, order)}>thinking</Button>
-            <Button onClick={() => this.setTableStatus('new order', id, order)}>new order</Button>
+            <Button onClick={() => this.setTableStatus('thinking', id)}>thinking</Button>
+            <Button onClick={() => this.setTableStatus('new order', id)}>new order</Button>
           </>
         );
       case 'thinking':
         return (
-          <Button onClick={() => this.setTableStatus('new order')}>new order</Button>
+          <Button onClick={() => this.setTableStatus('new order', id)}>new order</Button>
         );
       case 'ordered':
         return (
-          <Button onClick={() => this.setTableStatus('prepared')}>prepared</Button>
+          <Button onClick={() => this.setTableStatus('prepared', id)}>prepared</Button>
         );
       case 'prepared':
         return (
-          <Button onClick={() => this.setTableStatus('delivered')}>delivered</Button>
+          <Button onClick={() => this.setTableStatus('delivered', id)}>delivered</Button>
         );
       case 'delivered':
         return (
-          <Button onClick={() => this.setTableStatus('paid')}>paid</Button>
+          <Button onClick={() => this.setTableStatus('paid', id)}>paid</Button>
         );
       case 'paid':
         return (
-          <Button onClick={() => this.setTableStatus('free')}>free</Button>
+          <Button onClick={() => this.setTableStatus('free', id)}>free</Button>
         );
       default:
         return null;
@@ -73,7 +72,7 @@ class Waiter extends React.Component {
   }
 
   render() {
-    const { loading: { active, error }, tables, changeTableStatus } = this.props;
+    const { loading: { active, error }, tables } = this.props;
 
     if(active || !tables.length){
       return (
@@ -94,7 +93,7 @@ class Waiter extends React.Component {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell onClick={() => changeTableStatus()}>Table</TableCell>
+                <TableCell>Table</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>Order</TableCell>
                 <TableCell>Action</TableCell>
@@ -117,7 +116,7 @@ class Waiter extends React.Component {
                     )}
                   </TableCell>
                   <TableCell>
-                    {this.renderActions(row.status, row.id, row.order)}
+                    {this.renderActions(row.status, row.id)}
                   </TableCell>
                 </TableRow>
               ))}

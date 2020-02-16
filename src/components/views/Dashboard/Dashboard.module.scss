@@ -1,0 +1,19 @@
+@import '../../../styles/settings.scss';
+
+.component {
+  padding: $base-size;
+  display: flex;
+
+  .events {
+    width: 70%;
+    padding: $base-size;
+  }
+
+  .statistics {
+    max-width: 30%;
+    padding: $base-size;
+    text-align: center;
+  }
+}
+
+

@@ -69,11 +69,9 @@ export default function reducer(statePart = [], action = {}) {
       };
     }
     case CHANGE_STATUS: {
-      return {
+      return { 
         ...statePart,
-        tables: {
-          data: action.payload,
-        },
+        data: statePart.data.map(item => ((item.id !== action.payload.id) ? item : {...item, status: action.payload.status })),
       };
     }
     default:
