@@ -23,6 +23,7 @@ class Waiter extends React.Component {
       PropTypes.array,
     ]),
     changeTableStatus: PropTypes.func,
+    changeApiStatus: PropTypes.func,
   }
 
   componentDidMount(){
@@ -31,11 +32,12 @@ class Waiter extends React.Component {
   }
 
   setTableStatus(tableStatus, tableId) {
-    const {changeTableStatus} = this.props;
+    const {changeTableStatus, changeApiStatus} = this.props;
     changeTableStatus({
       id: tableId,
       status: tableStatus,
     });
+    changeApiStatus();
   }
 
   renderActions(status, id){

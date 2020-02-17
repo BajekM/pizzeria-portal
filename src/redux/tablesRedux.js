@@ -4,7 +4,6 @@ import { api } from '../settings';
 /* selectors */
 export const getAll = ({tables}) => tables.data;
 export const getLoadingState = ({tables}) => tables.loading;
-// export const getTable = ({tables}, id) => tables.data.filter(table => table.id === id);
 
 /* action name creator */
 const reducerName = 'tables';
@@ -30,6 +29,23 @@ export const fetchFromAPI = () => {
       .get(`${api.url}/${api.tables}`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchToAPI = () => {
+  return (dispatch, getState) => {
+    const state = getState();
+    const tables = state.tables.data;
+    Axios
+      .put(`${api.url}/${api.tables}`, {
+        tables,
+      })
+      .then(res => {
+        console.log('Response: ', res);
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -69,7 +85,7 @@ export default function reducer(statePart = [], action = {}) {
       };
     }
     case CHANGE_STATUS: {
-      return { 
+      return {
         ...statePart,
         data: statePart.data.map(item => ((item.id !== action.payload.id) ? item : {...item, status: action.payload.status })),
       };
