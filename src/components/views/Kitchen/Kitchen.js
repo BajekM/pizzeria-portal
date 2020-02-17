@@ -13,7 +13,7 @@ const demoContent = [
     id: 1,
     status: 'In progress',
     product: 'breakfast',
-    option: 'latte',
+    option: 'coffee: latte',
   },
   {
     id: 'D23',

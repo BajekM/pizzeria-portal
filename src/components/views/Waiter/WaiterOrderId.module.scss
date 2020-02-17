@@ -1,0 +1,13 @@
+@import '../../../styles/settings.scss';
+
+.component {
+  padding: $base-size;
+
+  td, th {
+    text-align: center;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+}
