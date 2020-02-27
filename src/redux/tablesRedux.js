@@ -20,6 +20,7 @@ export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const changeStatus = payload =>({payload, type: CHANGE_STATUS});
+
 /* thunk creators */
 export const fetchFromAPI = () => {
   return (dispatch, getState) => {
@@ -36,16 +37,15 @@ export const fetchFromAPI = () => {
   };
 };
 
-export const fetchToAPI = () => {
+export const changeStatusRequest = (obj) => {
   return (dispatch, getState) => {
     const state = getState();
-    const tables = state.tables.data;
+    const table = state.tables.data.find(table => table.id === obj.id);
+    const newTableData = { ...table, status: obj.status };
     Axios
-      .put(`${api.url}/${api.tables}`, {
-        tables,
-      })
+      .put(`${api.url}/${api.tables}/${obj.id}`, newTableData)
       .then(res => {
-        console.log('Response: ', res);
+        dispatch(changeStatus(obj));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));

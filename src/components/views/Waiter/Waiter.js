@@ -32,12 +32,11 @@ class Waiter extends React.Component {
   }
 
   setTableStatus(tableStatus, tableId) {
-    const {changeTableStatus, changeApiStatus} = this.props;
+    const { changeTableStatus } = this.props;
     changeTableStatus({
       id: tableId,
       status: tableStatus,
     });
-    changeApiStatus();
   }
 
   renderActions(status, id){
